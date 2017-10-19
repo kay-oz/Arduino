@@ -1,6 +1,6 @@
 
 /*
-  HecaWorld unLTD codes for IOT Autonomous Garden Kit. (c) 2017
+ IoT-Gardens WiFi Connect . (c) 2017
 */
 
 #include <Nextion.h>
