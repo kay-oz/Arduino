@@ -36,12 +36,12 @@ static float pHValue, voltage; //review and determine usage.
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "bddbe40a24c549b596fe9c941c684d18";
+char auth[] = "INSERT YOUR BLYNK AUTH TOKEN";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "HOME-A3BA-5";
-char pass[] = "chose7811escape";
+char ssid[] = "AP_NAME";
+char pass[] = "PASSWORD";
 
 int pHArray[ArrayLenth];          //Store the average value of the sensor feedback
 int pHArrayIndex = 0;
