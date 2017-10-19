@@ -1,7 +1,7 @@
 
 /*
-  HecaWorld unLTD in collaboration with IoT- Gardens, Inc.
-  Arduino code for Track My Tree Autonomous Cultivation Kit.
+  IoT- Gardens, Inc.
+  Arduino code for Track Your Tree Autonomous Cultivation Kit.
 */
 #include <Bridge.h>
 #include <Blynk.h>
