@@ -91,7 +91,7 @@ void loop(void)
   TempSensor();
   LuxReading();
   pHMeasurementValue();
-  Blynk.run();
+  //Blynk.run();
   //timer.run();
   //WiFiConnection();
 }
