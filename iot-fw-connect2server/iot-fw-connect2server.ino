@@ -156,27 +156,27 @@ void ECReading() {
   {
     printTime=millis();
     averageVoltage=AnalogAverage*(float)5000/1024;
-    Serial.print("Analog value:");
-    Serial.print(AnalogAverage);   //analog average,from 0 to 1023
-    Serial.print("    Voltage:");
-    Serial.print(averageVoltage);  //millivolt average,from 0mv to 4995mV
-    Serial.print("mV    ");
-    Serial.print("temp:");
-    Serial.print(temperature);    //current temperature
-    Serial.print("^C     EC:");
+    //Serial.print("Analog value:");
+    //Serial.print(AnalogAverage);   //analog average,from 0 to 1023
+    //Serial.print("    Voltage:");
+    //Serial.print(averageVoltage);  //millivolt average,from 0mv to 4995mV
+    //Serial.print("mV    ");
+    //Serial.print("temp:");
+    //Serial.print(temperature);    //current temperature
+    //Serial.print("^C     EC:");
     
     float TempCoefficient=temperature*1.8+32;    //temperature compensation formula: fFinalResult(25^C) = fFinalResult(current)/(1.0+0.0185*(fTP-25.0));
     float CoefficientVolatge=(float)averageVoltage/TempCoefficient;   
-    if(CoefficientVolatge<150)Serial.println("No solution!");   //25^C 1413us/cm<-->about 216mv  if the voltage(compensate)<150,that is <1ms/cm,out of the range
-    else if(CoefficientVolatge>3300)Serial.println("Out of the range!");  //>20ms/cm,out of the range
-    else
+    if(CoefficientVolatge<150)//Serial.println("No solution!");   //25^C 1413us/cm<-->about 216mv  if the voltage(compensate)<150,that is <1ms/cm,out of the range
+    //else if(CoefficientVolatge>3300)//Serial.println("Out of the range!");  //>20ms/cm,out of the range
+    //else
     { 
       if(CoefficientVolatge<=448)ecValue=6.84*CoefficientVolatge-64.32;   //1ms/cm<EC<=3ms/cm
       else if(CoefficientVolatge<=1457)ecValue=6.98*CoefficientVolatge-127;  //3ms/cm<EC<=10ms/cm
       else ecValue=5.3*CoefficientVolatge+2278;                           //10ms/cm<EC<20ms/cm
-      ecValue/=1000;    //convert us/cm to ms/cm
-      Serial.print(ecValue,2);  //two decimal
-      Serial.println("ms/cm");
+      //ecValue/=100;    //convert us/cm to ms/cm
+      //Serial.print(ecValue,2);  //two decimal
+      //Serial.println("ms/cm");
     }
   }
 
@@ -311,11 +311,11 @@ void publishResults() {
     myNextion.setComponentText("pH", String(pHValue));
     myNextion.setComponentText("pHb", String(pHValue));
     myNextion.setComponentText("Temp", String(temperature));
-    myNextion.setComponentText("Tempb", String(ecValue,4));
+    myNextion.setComponentText("Tempb", String(ecValue,2));
     myNextion.setComponentText("Unit", String("F "));
     myNextion.setComponentText("Unitb", String("EC"));
     delay(250);
-    Blynk.virtualWrite(V1,ecValue,5);
+    Blynk.virtualWrite(V1,ecValue,4);
     Blynk.virtualWrite(V3,pHValue);
     Blynk.virtualWrite(V4,LuxsensorValue);
     Blynk.virtualWrite(V5,temperature);
@@ -333,16 +333,16 @@ float TempProcess(bool ch)
   static float TemperatureSum;
   if(!ch){
           if ( !ds.search(addr)) {
-              Serial.println("no more sensors on chain, reset search!");
+              //Serial.println("no more sensors on chain, reset search!");
               ds.reset_search();
               return 0;
           }      
           if ( OneWire::crc8( addr, 7) != addr[7]) {
-              Serial.println("CRC is not valid!");
+              //Serial.println("CRC is not valid!");
               return 0;
           }        
           if ( addr[0] != 0x10 && addr[0] != 0x28) {
-              Serial.print("Device is not recognized!");
+              //Serial.print("Device is not recognized!");
               return 0;
           }      
           ds.reset();
