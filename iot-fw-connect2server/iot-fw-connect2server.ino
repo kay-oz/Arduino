@@ -59,8 +59,8 @@ char auth[] = "69f2123ee5164cfe9665752a2bbe87e1";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "xxxxxxxxxxx";
-char pass[] = "xxxxxxxxxxx";
+char ssid[] = "Monitored WiFi";
+char pass[] = "Kmav1067$$";
 
 int pHArray[ArrayLenth];          //Store the average value of the sensor feedback
 int pHArrayIndex = 0;
@@ -283,22 +283,6 @@ void SetpHThreshold()
 
 
 
-
-//Temperature Sensor Reading
-/*
-void TempSensor() {
- /* int a = analogRead(TempsensorPin);
-  float R = 1023.0/((float)a)-1.0;
-  R = 100000.0*R;;
-
-  TempsensorValue= dht.readTemperature(); //convert to temperature via datasheet ;
-  farh = dht.readTemperature(true);
-  h = dht.readHumidity();
-
-}
-
-*/
-
 void LuxReading() {
   LuxsensorValue = analogRead(LuxsensorPin);
   Luxsensor = (float)(1023 - LuxsensorValue) * 10 / LuxsensorValue;
@@ -371,54 +355,4 @@ float TempProcess(bool ch)
     }
           return TemperatureSum;  
 }
-
-
-/*
-
-//WiFi Connection
-void WiFiConnection() {
-  String message = myNextion.listen(); //check for message
-
-  // - message for WiFi connect page from Nextion") //consider using a message from an actual button rather than a sendme command. in this case, use the message from the okay button from the previous page. This will be from the action to opened that WiFi Connect page for SSID input.
-  if (message == "65 7 1 0 ffff ffff ffff")
-  {
-    SSIDConnect();
-  }
-}
-
-//use the Arduino to send command to load the WiFi Page
-//use the Arduino to listen for the 'print' response from the screen
-//use the !=, && and || commands to exclude none applicable messages
-//see example below
-void SSIDConnect() {
-  //include command to use arduino to send command to load the SSID input page here
-  String message = myNextion.listen(); //check for message
-  //  - (note is states if message is not equal to' i.e message from any other button on that page order than the okay button which should 'print' the message in the text field to Arduino, if no message is expected from this page, it could be ignored and the no-null message still allowed to ensure it captures any message from that page not excluded by the 'not equal to message.
-  if (message != "65 7 1 0 ffff ffff ffff" && message != "65 4 3 0 ffff ffff ffff" && message != "65 7 3 0 ffff ffff ffff" && message != "7" && message != "") {
-    ssid = message;
-    Serial.println("SSID: = ");
-    Serial.println(ssid);
-    //load the page for the password connect command before going to the next line of code
-    //delay(100); //give a little delay to allow the page to load properly.
-    PWConnect();
-  }
-}
-
-//use Arduino to load the Network password page
-//repeat as above for the SSID
-//see example below
-
-void PWConnect() {
-  //include command to use arduino to send command to load the network password input page here
-  String message = myNextion.listen(); //check for message
-  // - message from any other button on that page order than the okay button which should 'print' the message in the text field to Arduino
-  if (message != "65 8 1 0 ffff ffff ffff" && message != "65 8 4 0 ffff ffff ffff" && message != "65 8 3 0 ffff ffff ffff" && message != "8" && message != "")
-  {
-    pass = message;
-    Serial.println("Network Password: = ");
-    Serial.println(pass);
-    //WiFiCompleteConnect(); //Use this loop to enter the rest of the codes to complete the WiFi connection.
-  }
-}
-*/
 
