@@ -23,10 +23,11 @@ float farh;
 float h;
 float t;
 float Rsensor; //Resistance of sensor in K
-static float pHValue, voltage, ecValue; //review and determine usage.
+static float pHValue, voltage; //review and determine usage.
 DFRobot_EC ec;
 
 #define EC_PIN A4
+
 #define StartConvert 0
 #define ReadTemperature 1
 #define BLYNK_PRINT Serial
@@ -52,7 +53,8 @@ byte index = 0;                                         // the index of the curr
 unsigned long AnalogValueTotal = 0;                               // the running total
 unsigned int AnalogAverage = 0,averageVoltage=0;                       // the average
 unsigned long AnalogSampleTime,printTime,tempSampleTime;
-float temperature,ECcurrent; 
+float temperature,ECcurrent;
+float ecValue = 25;
 
 //Temperature chip i/o
 OneWire ds(DS18B20_Pin);  // on digital pin 
@@ -102,7 +104,7 @@ void setup(void)
 void loop(void)
 {
   publishResults();
-  SetpHThreshold();
+  //SetpHThreshold();
   //TempSensor();
   LuxReading();
   pHMeasurementValue();
@@ -144,7 +146,9 @@ void ECReading() {
     temperature = TempProcess(ReadTemperature)*1.8+32;  // read the current temperature from the  DS18B20
     TempProcess(StartConvert);                   //after the reading,start the convert for next reading
     ecValue =  ec.readEC(voltage,temperature);
+
   }
+  
    /*
    Every once in a while,print the information on the serial monitor.
   */
@@ -167,11 +171,11 @@ void ECReading() {
     else if(CoefficientVolatge>3300)Serial.println("Out of the range!");  //>20ms/cm,out of the range
     else
     { 
-      if(CoefficientVolatge<=448)ECcurrent=6.84*CoefficientVolatge-64.32;   //1ms/cm<EC<=3ms/cm
-      else if(CoefficientVolatge<=1457)ECcurrent=6.98*CoefficientVolatge-127;  //3ms/cm<EC<=10ms/cm
-      else ECcurrent=5.3*CoefficientVolatge+2278;                           //10ms/cm<EC<20ms/cm
-      ECcurrent/=1000;    //convert us/cm to ms/cm
-      Serial.print(ECcurrent,2);  //two decimal
+      if(CoefficientVolatge<=448)ecValue=6.84*CoefficientVolatge-64.32;   //1ms/cm<EC<=3ms/cm
+      else if(CoefficientVolatge<=1457)ecValue=6.98*CoefficientVolatge-127;  //3ms/cm<EC<=10ms/cm
+      else ecValue=5.3*CoefficientVolatge+2278;                           //10ms/cm<EC<20ms/cm
+      ecValue/=1000;    //convert us/cm to ms/cm
+      Serial.print(ecValue,2);  //two decimal
       Serial.println("ms/cm");
     }
   }
@@ -238,7 +242,7 @@ double avergearray(int* arr, int number) {
 
 
 
-
+/*
 //Set pH Threshold.
 
 void SetpHThreshold()
@@ -285,7 +289,7 @@ void SetpHThreshold()
     digitalWrite (LED, LOW);
   }
 }
-
+*/
 
 
 void LuxReading() {
@@ -307,11 +311,11 @@ void publishResults() {
     myNextion.setComponentText("pH", String(pHValue));
     myNextion.setComponentText("pHb", String(pHValue));
     myNextion.setComponentText("Temp", String(temperature));
-    myNextion.setComponentText("Tempb", String(ecValue));
+    myNextion.setComponentText("Tempb", String(ecValue,4));
     myNextion.setComponentText("Unit", String("F "));
     myNextion.setComponentText("Unitb", String("EC"));
     delay(250);
-    Blynk.virtualWrite(V1,ecValue);
+    Blynk.virtualWrite(V1,ecValue,5);
     Blynk.virtualWrite(V3,pHValue);
     Blynk.virtualWrite(V4,LuxsensorValue);
     Blynk.virtualWrite(V5,temperature);
