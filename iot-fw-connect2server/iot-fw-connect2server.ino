@@ -59,8 +59,8 @@ char auth[] = "69f2123ee5164cfe9665752a2bbe87e1";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Monitored WiFi";
-char pass[] = "Kmav1067$$";
+char ssid[] = "xxxxxxxxxxx";
+char pass[] = "xxxxxxxxxxx";
 
 int pHArray[ArrayLenth];          //Store the average value of the sensor feedback
 int pHArrayIndex = 0;
