@@ -10,6 +10,8 @@
 #include <DHT.h>
 #include <Nextion.h>
 #include <OneWire.h>
+#include <DFRobot_EC.h>
+#include <EEPROM.h>
 
 float pHThreshold; //Holds the value of the initial Threshold
 float FinalpHThreshold;
@@ -21,8 +23,10 @@ float farh;
 float h;
 float t;
 float Rsensor; //Resistance of sensor in K
-static float pHValue, voltage; //review and determine usage.
+static float pHValue, voltage, ecValue; //review and determine usage.
+DFRobot_EC ec;
 
+#define EC_PIN A4
 #define StartConvert 0
 #define ReadTemperature 1
 #define BLYNK_PRINT Serial
@@ -76,6 +80,7 @@ Nextion myNextion(nextion, 9600); //create a Nextion object named myNextion usin
 void setup(void)
 {
   //FinalpHThreshold = 7.0;
+  ec.begin();
   pHThreshold = 7.0;
   LuxThreshold = 100;
   TempThreshold = 69;
@@ -138,7 +143,7 @@ void ECReading() {
     tempSampleTime=millis();
     temperature = TempProcess(ReadTemperature)*1.8+32;  // read the current temperature from the  DS18B20
     TempProcess(StartConvert);                   //after the reading,start the convert for next reading
-    
+    ecValue =  ec.readEC(voltage,temperature);
   }
    /*
    Every once in a while,print the information on the serial monitor.
@@ -302,11 +307,11 @@ void publishResults() {
     myNextion.setComponentText("pH", String(pHValue));
     myNextion.setComponentText("pHb", String(pHValue));
     myNextion.setComponentText("Temp", String(temperature));
-    myNextion.setComponentText("Tempb", String(ECcurrent));
+    myNextion.setComponentText("Tempb", String(ecValue));
     myNextion.setComponentText("Unit", String("F "));
     myNextion.setComponentText("Unitb", String("EC"));
     delay(250);
-    Blynk.virtualWrite(V1,ECcurrent);
+    Blynk.virtualWrite(V1,ecValue);
     Blynk.virtualWrite(V3,pHValue);
     Blynk.virtualWrite(V4,LuxsensorValue);
     Blynk.virtualWrite(V5,temperature);
