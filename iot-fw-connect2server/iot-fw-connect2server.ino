@@ -118,7 +118,7 @@ void ECReading() {
   /*
    Every once in a while,sample the analog value and calculate the average.
   */
-  if(millis()-AnalogSampleTime>=AnalogSampleInterval)  
+ /* if(millis()-AnalogSampleTime>=AnalogSampleInterval)  
   {
     AnalogSampleTime=millis();
      // subtract the last reading:
@@ -171,10 +171,10 @@ void ECReading() {
     //else if(CoefficientVolatge>3300)//Serial.println("Out of the range!");  //>20ms/cm,out of the range
     //else
     { 
-      if(CoefficientVolatge<=448)ecValue=6.84*CoefficientVolatge-64.32;   //1ms/cm<EC<=3ms/cm
-      else if(CoefficientVolatge<=1457)ecValue=6.98*CoefficientVolatge-127;  //3ms/cm<EC<=10ms/cm
+      if(CoefficientVolatge<=448)ecValue=6.84*CoefficientVolatge+64.32;   //1ms/cm<EC<=3ms/cm
+      else if(CoefficientVolatge<=1457)ecValue=6.98*CoefficientVolatge+127;  //3ms/cm<EC<=10ms/cm
       else ecValue=5.3*CoefficientVolatge+2278;                           //10ms/cm<EC<20ms/cm
-      //ecValue/=100;    //convert us/cm to ms/cm
+      //ecValue/=1000;    //convert us/cm to ms/cm
       //Serial.print(ecValue,2);  //two decimal
       //Serial.println("ms/cm");
     }
