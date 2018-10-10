@@ -61,12 +61,12 @@ OneWire ds(DS18B20_Pin);  // on digital pin
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "69f2123ee5164cfe9665752a2bbe87e1";
+char auth[] = "xxxxxxxxxxxxxxxx";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Monitored WiFi";
-char pass[] = "Kmav1067$$";
+char ssid[] = "xxxxxxxxxxxxxxxx";
+char pass[] = "xxxxxxxxxxxxxxxx";
 
 int pHArray[ArrayLenth];          //Store the average value of the sensor feedback
 int pHArrayIndex = 0;
