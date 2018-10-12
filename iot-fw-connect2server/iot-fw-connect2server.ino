@@ -313,7 +313,9 @@ void publishResults() {
     myNextion.setComponentText("Temp", String(temperature));
     myNextion.setComponentText("Tempb", String(ecValue,2));
     myNextion.setComponentText("Unit", String("F "));
-    myNextion.setComponentText("Unitb", String("EC"));
+    myNextion.setComponentText("Unitb", String("F "));
+    myNextion.setComponentText("EC", String(ecValue,2));
+    myNextion.setComponentText("Unitc", String("EC"));
     delay(250);
     Blynk.virtualWrite(V1,ecValue,4);
     Blynk.virtualWrite(V3,pHValue);
